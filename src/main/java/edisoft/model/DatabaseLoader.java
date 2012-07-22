@@ -1,4 +1,4 @@
-package erisoft.model;
+package edisoft.model;
 
 
 import org.apache.commons.io.IOUtils;

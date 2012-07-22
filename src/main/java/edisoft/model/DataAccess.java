@@ -1,7 +1,7 @@
-package erisoft.model;
+package edisoft.model;
 
-import erisoft.model.entity.DetailRow;
-import erisoft.model.entity.HeaderRow;
+import edisoft.model.entity.DetailRow;
+import edisoft.model.entity.HeaderRow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 
 
 import javax.sql.DataSource;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;

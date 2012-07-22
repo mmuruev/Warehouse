@@ -52,7 +52,7 @@
 					<ReceiverUnitOfMeasureSystemLookUp>Ьhik</ReceiverUnitOfMeasureSystemLookUp>
 					<ReceiverUnitOfMeasureSystemLookUpTag>UnitOfMeasure</ReceiverUnitOfMeasureSystemLookUpTag> 
 					<ReceiverUnitOfMeasureSystemLookUpField>Наим</ReceiverUnitOfMeasureSystemLookUpField>
-					<ItemNetPriceTag>Line-Item/InvoiceUnitNetPrice</ItemNetPriceTag>
+					<ItemNetPriceTag>Line-Item/fNetPrice</ItemNetPriceTag>
 					<!--<ItemGrossPriceTag>Line-Item/OrderedUnitGrossPrice</ItemGrossPriceTag>--> <!-- Таг в XML для цены 1 единицы товара без с налогом (брутто)--> 
 				</Document-Lines>
 			</DocumentSettings>	

@@ -1,19 +1,18 @@
-package erisoft.service;
+package edisoft.service;
 
-import erisoft.model.entity.DetailRow;
-import erisoft.model.entity.HeaderRow;
+import edisoft.model.entity.DetailRow;
+import edisoft.model.entity.HeaderRow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
-import erisoft.model.DataAccess;
+import edisoft.model.DataAccess;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.*;
 
 @Component
@@ -32,15 +31,15 @@ public class WarehouseService {
     @Path("headers")
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, List<HeaderRow>> getHeaders() {
-        LOGGER.info("IN: request headers {}",
-                new Object[]{System.currentTimeMillis()});
+        LOGGER.info("{} IN: request headers",
+                new Object[]{new Date()});
         List<HeaderRow> headers = new LinkedList<>();
         try {
             headers = dataAccess.fetchAllHeaders();
         } catch (EmptyResultDataAccessException exception) {
 
-            LOGGER.info("OUT: not found headers {} ",
-                    new Object[]{System.currentTimeMillis()});
+            LOGGER.info("{} OUT: not found headers",
+                    new Object[]{new Date()});
 
         }
         HeaderRow header = new HeaderRow();
@@ -61,15 +60,15 @@ public class WarehouseService {
     @Path("details")
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, List<DetailRow>> getDetails() {
-        LOGGER.info("IN: request details {}",
-                new Object[]{System.currentTimeMillis()});
+        LOGGER.info("{} IN: request details",
+                new Object[]{new Date()});
         List<DetailRow> headers = new LinkedList<>();
         try {
             headers = dataAccess.fetchAllDetails();
         } catch (EmptyResultDataAccessException exception) {
 
-            LOGGER.info("OUT: not found details {} ",
-                    new Object[]{System.currentTimeMillis()});
+            LOGGER.info("{} OUT: not found details",
+                    new Object[]{new Date()});
 
         }
 

@@ -1,4 +1,4 @@
-package erisoft.model.entity;
+package edisoft.model.entity;
 
 import java.math.BigDecimal;
 

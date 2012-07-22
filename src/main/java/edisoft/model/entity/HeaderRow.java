@@ -1,8 +1,7 @@
-package erisoft.model.entity;
+package edisoft.model.entity;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 
 @XmlRootElement
