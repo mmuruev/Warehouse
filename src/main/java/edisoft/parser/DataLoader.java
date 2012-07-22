@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -18,6 +19,7 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.util.Date;
 
+@Component
 public class DataLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DataLoader.class);

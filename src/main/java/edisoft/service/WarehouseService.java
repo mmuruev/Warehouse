@@ -37,20 +37,10 @@ public class WarehouseService {
         try {
             headers = dataAccess.fetchAllHeaders();
         } catch (EmptyResultDataAccessException exception) {
-
             LOGGER.info("{} OUT: not found headers",
                     new Object[]{new Date()});
 
         }
-        HeaderRow header = new HeaderRow();
-        header.receiverAddress = "my streat";
-        header.receiverILN =  new BigDecimal("123454323");
-        header.documentDate1 = new Date();
-        header.documentDate2 = new Date();
-        header.senderName = "Vasja";
-        dataAccess.setHeader(header);
-
-
         Map<String, List<HeaderRow>> responder = new HashMap<>();
         responder.put("aaData", headers);
         return responder;
@@ -66,20 +56,10 @@ public class WarehouseService {
         try {
             headers = dataAccess.fetchAllDetails();
         } catch (EmptyResultDataAccessException exception) {
-
             LOGGER.info("{} OUT: not found details",
                     new Object[]{new Date()});
 
         }
-
-        DetailRow detail = new DetailRow();
-        detail.invoiceUnitNetPrice = new BigDecimal(1234565432);
-        detail.supplierItemCode = 1;
-        detail.lineNumber = 50;
-        detail.itemDescription =" hz cho eto";
-        detail.invoiceQuantity =1000;
-        dataAccess.setDetail(detail);
-
         Map<String, List<DetailRow>> responder = new HashMap<>();
         responder.put("aaData", headers);
         return responder;

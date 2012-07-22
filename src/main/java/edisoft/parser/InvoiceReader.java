@@ -84,37 +84,6 @@ public class InvoiceReader {
         detailRow.invoiceUnitNetPrice = nodeBigDecimal(lineItem, "InvoiceUnitNetPrice");
     }
 
-/*    public static void main(final String... args) throws FileNotFoundException {
-        final String transformerFileName = "INVOIC_edisoft2initial_view_1c.xsl";
-        final Transformer transformer = InvoiceReader.newTransformer(new FileInputStream(transformerFileName));
-        for (final String fileName : args) {
-            final InvoiceReader invoice = new InvoiceReader(new FileInputStream(fileName), transformer);
-            System.out.println();
-            System.out.println("DocumentType: " + invoice.documentType);
-            System.out.println("ReceiverSystemType: " + invoice.receiverSystemType);
-            System.out.println("DocumentNumber: " + invoice.documentNumber);
-            System.out.println("DocumentDate1: " + invoice.documentDate1);
-            System.out.println("DocumentDate2: " + invoice.documentDate2);
-            System.out.println();
-            System.out.println("SenderILN: " + invoice.sender.iln);
-            System.out.println("SenderCodeByReceiver: " + invoice.sender.codeByReceiver);
-            System.out.println("SenderName: " + invoice.sender.name);
-            System.out.println("SenderAddress: " + invoice.sender.address);
-            System.out.println();
-            System.out.println("ReceiverILN: " + invoice.receiver.iln);
-            System.out.println("ReceiverCodeByReceiver: " + invoice.receiver.codeByReceiver);
-            System.out.println("ReceiverName: " + invoice.receiver.name);
-            System.out.println("ReceiverAddress: " + invoice.receiver.address);
-            System.out.println();
-            System.out.println("LineNumber: " + invoice.lineNumber);
-            System.out.println("SupplierItemCode: " + invoice.supplierItemCode);
-            System.out.println("ItemDescription: " + invoice.itemDescription);
-            System.out.println("InvoiceQuantity: " + invoice.invoiceQuantity);
-            System.out.println("InvoiceUnitNetPrice: " + invoice.invoiceUnitNetPrice);
-            System.out.println();
-        }
-    }*/
-
     public static Transformer newTransformer(final InputStream stream) {
         try (final BufferedReader reader = new BufferedReader(new InputStreamReader(stream, ENCODING))) {
             return TransformerFactory.newInstance().newTransformer(new StreamSource(reader));
