@@ -2,6 +2,7 @@ package edisoft.parser;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
 import javax.xml.transform.Transformer;
@@ -9,6 +10,7 @@ import java.io.FileInputStream;
 import java.nio.file.*;
 
 import static java.nio.file.StandardWatchEventKinds.*;
+
 @Component
 public class WatcherThread extends Thread {
 

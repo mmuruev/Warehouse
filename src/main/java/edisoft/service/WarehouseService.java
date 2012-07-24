@@ -39,7 +39,6 @@ public class WarehouseService {
         } catch (EmptyResultDataAccessException exception) {
             LOGGER.info("{} OUT: not found headers",
                     new Object[]{new Date()});
-
         }
         Map<String, List<HeaderRow>> responder = new HashMap<>();
         responder.put("aaData", headers);
@@ -52,16 +51,18 @@ public class WarehouseService {
     public Map<String, List<DetailRow>> getDetails() {
         LOGGER.info("{} IN: request details",
                 new Object[]{new Date()});
-        List<DetailRow> headers = new LinkedList<>();
+        List<DetailRow> detailRows = new ArrayList<>(1);
+        DetailRow detailRow;
         try {
-            headers = dataAccess.fetchAllDetails();
+            detailRow = dataAccess.getDetailById(0);
+            detailRows.add(detailRow);
         } catch (EmptyResultDataAccessException exception) {
             LOGGER.info("{} OUT: not found details",
                     new Object[]{new Date()});
-
         }
+
         Map<String, List<DetailRow>> responder = new HashMap<>();
-        responder.put("aaData", headers);
+        responder.put("aaData", detailRows);
         return responder;
     }
 }

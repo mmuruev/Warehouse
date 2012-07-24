@@ -35,6 +35,13 @@ public class DataAccess {
         return database.query("SELECT * FROM DETAILS", DETAIL_MAPPER);
     }
 
+    public DetailRow getDetailById(final int id)
+    {
+        return database.queryForObject("SELECT * FROM DETAILS WHERE id=?",DETAIL_MAPPER,id);
+    }
+
+
+
     public void setHeader(final HeaderRow header) {
         database.update("INSERT INTO HEADERS (" + HEADER_FIELDS + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 header.documentType, header.receiverSystemType, header.documentNumber, header.documentDate1, header.documentDate2,

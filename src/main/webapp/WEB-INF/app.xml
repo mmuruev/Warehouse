@@ -7,6 +7,7 @@
             http://www.springframework.org/schema/context
             http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
+
     <context:component-scan base-package="edisoft"/>
 
     <bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -20,6 +21,14 @@
         <constructor-arg name="script" value="database.sql"/>
     </bean>
 
-    <bean class="edisoft.parser.DataLoader"></bean>
+    <bean id="taskExecutorPool" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+      <property name="corePoolSize" value="1" />
+      <property name="maxPoolSize" value="1" />
+      <property name="queueCapacity" value="1" />
+    </bean>
+
+    <bean id="taskExecutorExample" class="edisoft.parser.DaemonRunner">
+      <constructor-arg name="taskExecutor" ref="taskExecutorPool"/>
+    </bean>
 
 </beans>
