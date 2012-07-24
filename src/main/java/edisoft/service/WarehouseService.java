@@ -52,10 +52,10 @@ public class WarehouseService {
         LOGGER.info("{} IN: request details",
                 new Object[]{new Date()});
         List<DetailRow> detailRows = new ArrayList<>(1);
-        DetailRow detailRow;
+
         try {
-            detailRow = dataAccess.getDetailById(0);
-            detailRows.add(detailRow);
+            detailRows = dataAccess.fetchAllDetails();
+            //detailRows.add(dataAccess.getDetailById(0));
         } catch (EmptyResultDataAccessException exception) {
             LOGGER.info("{} OUT: not found details",
                     new Object[]{new Date()});

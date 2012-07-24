@@ -30,7 +30,7 @@ public class InvoiceReader {
     private static final Charset ENCODING = Charset.forName("UTF-8");
     private static final XPath PATH = XPathFactory.newInstance().newXPath();
 
-    private static final String DATE_FORMAT = "yyyy.MM.dd'T'HH:mm:ss";
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
 
     public final HeaderRow headerRow = new HeaderRow();
     public final DetailRow detailRow = new DetailRow();
@@ -80,7 +80,7 @@ public class InvoiceReader {
         detailRow.lineNumber = nodeInteger(lineItem, "LineNumber");
         detailRow.supplierItemCode = nodeInteger(lineItem, "SupplierItemCode");
         detailRow.itemDescription = nodeString(lineItem, "ItemDescription");
-        detailRow.invoiceQuantity = nodeInteger(lineItem, "InvoiceQuantity");
+        detailRow.invoiceQuantity = nodeBigDecimal(lineItem, "InvoiceQuantity");
         detailRow.invoiceUnitNetPrice = nodeBigDecimal(lineItem, "InvoiceUnitNetPrice");
     }
 

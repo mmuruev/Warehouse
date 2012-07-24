@@ -7,6 +7,6 @@ public class DetailRow {
     public int lineNumber;
     public int supplierItemCode;
     public String itemDescription;
-    public int invoiceQuantity;
+    public BigDecimal invoiceQuantity;
     public BigDecimal invoiceUnitNetPrice = BigDecimal.ZERO;
 }

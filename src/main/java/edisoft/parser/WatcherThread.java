@@ -34,7 +34,7 @@ public class WatcherThread extends Thread {
     private void watcher(final String path) throws Exception {
         final Path directoryToWatch = Paths.get(path);
         final WatchService watcherSvc = FileSystems.getDefault().newWatchService();
-        WatchKey watchKey = directoryToWatch.register(watcherSvc, ENTRY_MODIFY);
+        WatchKey watchKey = directoryToWatch.register(watcherSvc, ENTRY_MODIFY, ENTRY_CREATE );
         final Transformer transformer = InvoiceReader.newTransformer(new FileInputStream(XSL_FILE));
 
         while (true) {

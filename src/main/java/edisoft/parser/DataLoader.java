@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -23,17 +24,17 @@ import java.util.Date;
 public class DataLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DataLoader.class);
-    private final DataAccess dataAccess;
+    @Autowired
+    private DataAccess dataAccess;
 
     private Transformer transformer;
 
-    @Autowired
-    public DataLoader(final DataAccess dataAccess) throws TransformerConfigurationException{
-        this.dataAccess = dataAccess;
+
+    public DataLoader() throws TransformerConfigurationException {
         transformer = TransformerFactory.newInstance().newTransformer();
     }
 
-    public void save(String xmlInput) {
+    public void save(final String xmlInput) {
         final InvoiceReader invoice;
 
         try {
@@ -49,12 +50,23 @@ public class DataLoader {
         }
         LOGGER.info("{} File {} was read successful",
                 new Object[]{new Date(), xmlInput});
+        try {
+            commitToDB(invoice);
+        } catch (RuntimeException exception) {
+            String errorMessage = "Can't commit XML in database";
+            LOGGER.error("{}" + errorMessage,new Date());
+            LOGGER.debug("{}" + errorMessage, new Date(),exception);
+        }
+    }
 
+    @Transactional
+    private void commitToDB(final InvoiceReader invoice) {
         try {
             dataAccess.setHeader(invoice.headerRow);
         } catch (DataAccessException exception) {
             LOGGER.error("{} Error occurred while save HEADER\n {}",
                     new Object[]{new Date(), exception});
+            throw new RuntimeException(exception);
         }
         LOGGER.info("{} HEADER have been updated successful",
                 new Object[]{new Date()});
@@ -62,14 +74,15 @@ public class DataLoader {
         try {
             dataAccess.setDetail(invoice.detailRow);
         } catch (DataAccessException exception) {
-            LOGGER.error("{} Error occurred while save DETAIL\n {}",
+            LOGGER.error("{} Error occurred while save DETAIL.\n Rollback HEADER update.\n {}",
                     new Object[]{new Date(), exception});
+            throw new RuntimeException(exception);
         }
-        LOGGER.info("{} HEADER have been updated successful",
+        LOGGER.info("{} DETAILS have been updated successful",
                 new Object[]{new Date()});
     }
 
-    public void setTransformer(Transformer transformer) {
+    public void setTransformer(final Transformer transformer) {
         this.transformer = transformer;
     }
 

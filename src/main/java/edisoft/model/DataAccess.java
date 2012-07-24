@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 
 import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -21,6 +22,7 @@ public class DataAccess {
             " SENDER_ILN, SENDER_CODE_BY_RECEIVER, SENDER_NAME, SENDER_ADDRESS," +
             " RECEIVER_ILN, RECEIVER_CODE_BY_RECEIVER, RECEIVER_NAME, RECEIVER_ADDRESS";
     private final JdbcTemplate database;
+
 
     @Autowired
     public DataAccess(final DataSource dataSource) {
@@ -42,15 +44,15 @@ public class DataAccess {
 
 
 
-    public void setHeader(final HeaderRow header) {
-        database.update("INSERT INTO HEADERS (" + HEADER_FIELDS + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    public int setHeader(final HeaderRow header) {
+        return database.update("INSERT INTO HEADERS (" + HEADER_FIELDS + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 header.documentType, header.receiverSystemType, header.documentNumber, header.documentDate1, header.documentDate2,
                 header.senderILN, header.senderCodeByReceiver, header.senderName, header.senderAddress,
                 header.receiverILN, header.receiverCodeByReceiver, header.receiverName, header.receiverAddress);
     }
 
-    public void setDetail(final DetailRow detail) {
-        database.update("INSERT INTO DETAILS (LINE_NUMBER, SUPPLIER_ITEM_CODE, ITEM_DESCRIPTION, INVOICE_QUANTITY," +
+    public int setDetail(final DetailRow detail) {
+        return database.update("INSERT INTO DETAILS (LINE_NUMBER, SUPPLIER_ITEM_CODE, ITEM_DESCRIPTION, INVOICE_QUANTITY," +
                 " INVOICE_UNIT_NET_PRICE ) VALUES (?, ?, ?, ?, ?)",
                 detail.lineNumber, detail.supplierItemCode, detail.itemDescription, detail.invoiceQuantity,
                 detail.invoiceUnitNetPrice);
@@ -62,7 +64,7 @@ public class DataAccess {
             final HeaderRow header = new HeaderRow();
             header.id = rs.getInt("ID");
             header.documentType = rs.getString("DOCUMENT_TYPE");
-            header.receiverAddress = rs.getString("RECEIVER_SYSTEM_TYPE");
+            header.receiverSystemType = rs.getString("RECEIVER_SYSTEM_TYPE");
             header.documentNumber = rs.getInt("DOCUMENT_NUMBER");
             header.documentDate1 = rs.getDate("DOCUMENT_DATE_1");
             header.documentDate2 = rs.getDate("DOCUMENT_DATE_2");
@@ -89,7 +91,7 @@ public class DataAccess {
             detail.lineNumber = rs.getInt("LINE_NUMBER");
             detail.supplierItemCode = rs.getInt("SUPPLIER_ITEM_CODE");
             detail.itemDescription = rs.getString("ITEM_DESCRIPTION");
-            detail.invoiceQuantity = rs.getInt("INVOICE_QUANTITY");
+            detail.invoiceQuantity = rs.getBigDecimal("INVOICE_QUANTITY");
             detail.invoiceUnitNetPrice = rs.getBigDecimal("INVOICE_UNIT_NET_PRICE");
             return detail;
         }
