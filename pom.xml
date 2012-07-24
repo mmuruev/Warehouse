@@ -9,10 +9,10 @@
     <name>warehouse</name>
 
     <repositories>
-       <repository>
-          <id>tduchateau-maven-repo</id>
-          <url>https://raw.github.com/tduchateau/tduchateau-maven-repo/master/releases</url>
-       </repository>
+        <repository>
+            <id>tduchateau-maven-repo</id>
+            <url>https://raw.github.com/tduchateau/tduchateau-maven-repo/master/releases</url>
+        </repository>
     </repositories>
 
     <properties>
@@ -27,6 +27,7 @@
         <slf4j.version>1.6.6</slf4j.version>
         <spring.version>3.1.1.RELEASE</spring.version>
         <javax.version>2.5</javax.version>
+        <cglib.version>2.2</cglib.version>
 
         <!-- test -->
         <junit.version>4.10</junit.version>
@@ -89,9 +90,9 @@
         </dependency>
         <!-- DataBase -->
         <dependency>
-        	<groupId>postgresql</groupId>
-        	<artifactId>postgresql</artifactId>
-        	<version>${posgresql.version}</version>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${posgresql.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hsqldb</groupId>
@@ -113,6 +114,12 @@
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
+        <!-- AOP dependency -->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>${cglib.version}</version>
+        </dependency>
         <!-- WebClient -->
         <dependency>
             <groupId>com.sun.jersey</groupId>
@@ -120,21 +127,21 @@
             <version>${jersey.version}</version>
         </dependency>
         <dependency>
-        	<groupId>javax.servlet</groupId>
-        	<artifactId>servlet-api</artifactId>
-        	<version>${javax.version}</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>${javax.version}</version>
         </dependency>
         <!-- Web UI table -->
         <dependency>
-           <groupId>javax.servlet</groupId>
-           <artifactId>jstl</artifactId>
-           <version>1.2</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
         </dependency>
 
         <dependency>
-           <groupId>fr.tduchateau</groupId>
-           <artifactId>datatables-taglib</artifactId>
-           <version>1.0.2</version>
+            <groupId>fr.tduchateau</groupId>
+            <artifactId>datatables-taglib</artifactId>
+            <version>1.0.2</version>
         </dependency>
 
 
