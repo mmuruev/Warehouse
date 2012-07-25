@@ -1,4 +1,4 @@
-package edisoft.parser;
+package edisoft.loader.parser;
 
 import edisoft.model.entity.DetailRow;
 import edisoft.model.entity.HeaderRow;

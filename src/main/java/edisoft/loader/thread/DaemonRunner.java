@@ -1,4 +1,4 @@
-package edisoft.parser;
+package edisoft.loader.thread;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
