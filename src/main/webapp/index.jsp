@@ -21,7 +21,7 @@
 
 
     <script type="text/javascript" charset="utf-8">
-        $('#basicModalContent').modal();
+
         $(document).ready(function () {
             var connectPost = function (sSource, aoData, fnCallback) {
                 $.ajax({
@@ -45,7 +45,7 @@
                         "bUseRendered":false,
                         "fnRender":function (oObj) {
                             var id = oObj.aData[oObj.oSettings.aoColumns[oObj.iDataColumn].mDataProp]
-                            return '<input type="button" name="'+id+'" value="Detail" class="basic"/> ';
+                            return '<div id="basic-modal"><input type="button" name="'+id+'" value="Detail" class="basic"/> </div>';
                         }},
                     { "mDataProp":"documentType" },
                     { "mDataProp":"receiverSystemType" },
@@ -100,7 +100,6 @@
   			<p><code>$.modal('&lt;p&gt;&lt;b&gt;HTML&lt;/b&gt; elements&lt;/p&gt;'); // HTML</code></p>
   			<p><code>$('&lt;div&gt;&lt;/div&gt;').load('page.html').modal(); // AJAX</code></p>
 
-  			<p><a href='http://www.ericmmartin.com/projects/simplemodal/'>More details...</a></p>
   		</div>
 
     <!-- preload the images -->
