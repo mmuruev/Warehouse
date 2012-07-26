@@ -49,8 +49,8 @@ public class WarehouseService {
     @Path("detail/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, List<DetailRow>> getDetailById(@PathParam("id") final int id) {
-        LOGGER.info("{} IN: request details",
-                new Object[]{new Date()});
+        LOGGER.info("{} IN: request detail id={}",
+                new Object[]{new Date()},id);
         List<DetailRow> detailRows = new ArrayList<>(1);
 
         try {
