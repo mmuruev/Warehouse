@@ -46,16 +46,16 @@ public class WarehouseService {
     }
 
     @POST
-    @Path("details")
+    @Path("detail/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, List<DetailRow>> getDetails() {
+    public Map<String, List<DetailRow>> getDetailById(@PathParam("id") final int id) {
         LOGGER.info("{} IN: request details",
                 new Object[]{new Date()});
         List<DetailRow> detailRows = new ArrayList<>(1);
 
         try {
-            detailRows = dataAccess.fetchAllDetails();
-            //detailRows.add(dataAccess.getDetailById(0));
+            //detailRows = dataAccess.fetchAllDetails();
+            detailRows.add(dataAccess.getDetailById(id));
         } catch (EmptyResultDataAccessException exception) {
             LOGGER.info("{} OUT: not found details",
                     new Object[]{new Date()});
