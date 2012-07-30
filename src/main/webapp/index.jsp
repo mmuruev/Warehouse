@@ -22,14 +22,14 @@
 
     <script type="text/javascript" charset="utf-8">
         var detailTable;
-        var openDialog = function(id) {
-            detailTable.fnReloadAjax( 'service/detail/'+ id );
-            detailTable.fnDraw();
+        var openDialog = function (id) {
+            detailTable.fnReloadAjax('service/detail/' + id);
             $("#detailsBlock").modal({
                 overlayClose:true,
-                opacity:70,
-                overlayCss:{backgroundColor:"#eee"}
+                minWidth:1000,
+                persist:true
             });
+
         }
         $(document).ready(function () {
             var connectPost = function (sSource, aoData, fnCallback) {
@@ -42,21 +42,18 @@
                 })
             }
 
-
             $('#header').dataTable({
-
                 "sAjaxSource":"service/headers",
                 "bProcessing":true,
                 "bDeferRender":true,
                 "aoColumns":[
-
                     {   "bSortable":false,
                         "bSearchable":false,
                         "mDataProp":"id",
                         "bUseRendered":false,
                         "fnRender":function (oObj) {
                             var id = oObj.aData[oObj.oSettings.aoColumns[oObj.iDataColumn].mDataProp]
-                            return '<div id="basic-modal"><input type="button" name="detail" value="Detail" class="basic" onClick="javascript:openDialog('+id+')"/> </div>';
+                            return '<div id="basic-modal"><input type="button" name="detail" value="Detail" class="bas" onClick="javascript:openDialog(' + id + ')"/> </div>';
                         }},
                     { "mDataProp":"documentType" },
                     { "mDataProp":"receiverSystemType" },
@@ -76,54 +73,51 @@
                 ], "fnServerData":connectPost
 
             });
-            $.fn.dataTableExt.oApi.fnReloadAjax = function ( oSettings, sNewSource, fnCallback, bStandingRedraw )
-                       {
-                           if ( typeof sNewSource != 'undefined' && sNewSource != null )
-                           {
-                               oSettings.sAjaxSource = sNewSource;
-                           }
-                           this.oApi._fnProcessingDisplay( oSettings, true );
-                           var that = this;
-                           var iStart = oSettings._iDisplayStart;
-                           var aData = [];
+            $.fn.dataTableExt.oApi.fnReloadAjax = function (oSettings, sNewSource, fnCallback, bStandingRedraw) {
+                if (typeof sNewSource != 'undefined' && sNewSource != null) {
+                    oSettings.sAjaxSource = sNewSource;
+                }
+                this.oApi._fnProcessingDisplay(oSettings, true);
+                var that = this;
+                var iStart = oSettings._iDisplayStart;
+                var aData = [];
 
-                           this.oApi._fnServerParams( oSettings, aData );
+                this.oApi._fnServerParams(oSettings, aData);
 
-                           oSettings.fnServerData( oSettings.sAjaxSource, aData, function(json) {
-                               /* Clear the old information from the table */
-                               that.oApi._fnClearTable( oSettings );
+                oSettings.fnServerData(oSettings.sAjaxSource, aData, function (json) {
+                    /* Clear the old information from the table */
+                    that.oApi._fnClearTable(oSettings);
 
-                               /* Got the data - add it to the table */
-                               var aData =  (oSettings.sAjaxDataProp !== "") ?
-                                   that.oApi._fnGetObjectDataFn( oSettings.sAjaxDataProp )( json ) : json;
+                    /* Got the data - add it to the table */
+                    var aData = (oSettings.sAjaxDataProp !== "") ?
+                            that.oApi._fnGetObjectDataFn(oSettings.sAjaxDataProp)(json) : json;
 
-                               for ( var i=0 ; i<aData.length ; i++ )
-                               {
-                                   that.oApi._fnAddData( oSettings, aData[i] );
-                               }
+                    for (var i = 0; i < aData.length; i++) {
+                        that.oApi._fnAddData(oSettings, aData[i]);
+                    }
 
-                               oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
-                               that.fnDraw();
+                    oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
 
-                               if ( typeof bStandingRedraw != 'undefined' && bStandingRedraw === true )
-                               {
-                                   oSettings._iDisplayStart = iStart;
-                                   that.fnDraw( false );
-                               }
+                    that.fnDraw();
 
-                               that.oApi._fnProcessingDisplay( oSettings, false );
+                    if (typeof bStandingRedraw != 'undefined' && bStandingRedraw === true) {
+                        oSettings._iDisplayStart = iStart;
+                        that.fnDraw(false);
+                    }
 
-                               /* Callback user function - for event handlers etc */
-                               if ( typeof fnCallback == 'function' && fnCallback != null )
-                               {
-                                   fnCallback( oSettings );
-                               }
-                           }, oSettings );
-                       };
+                    that.oApi._fnProcessingDisplay(oSettings, false);
+
+                    /* Callback user function - for event handlers etc */
+                    if (typeof fnCallback == 'function' && fnCallback != null) {
+                        fnCallback(oSettings);
+                    }
+                }, oSettings);
+            };
             detailTable = $('#details').dataTable({
-                /*"sAjaxSource":"service/details",*/
                 "bProcessing":true,
-                "bDeferRender":true,
+                "bDestroy":true,
+                "bFilter": false,
+                "bPaginate": false,
                 "aoColumns":[
                     { "mDataProp":"lineNumber" },
                     { "mDataProp":"supplierItemCode" },
@@ -147,9 +141,9 @@
     <h1>Header</h1>
 
     <!-- preload the images -->
-  		<div style='display:none'>
-  			<img src='images/x.png' alt='' />
-  		</div>
+    <div style='display:none'>
+        <img src='images/x.png' alt=''/>
+    </div>
     <div id="demo">
 
         <table cellpadding="0" cellspacing="0" border="0" class="display" id="header">
@@ -201,31 +195,31 @@
         </table>
 
         <div id="detailsBlock" style="display:none;background-color:#ddd;">
-        <h1>Details</h1>
+            <h1>Details</h1>
 
-        <table cellpadding="0" cellspacing="0" border="0" class="display" id="details">
-            <thead>
-            <tr>
-                <th>LineNumber</th>
-                <th>SupplierItemCode</th>
-                <th>ItemDescription</th>
-                <th>InvoiceQuantity</th>
-                <th>InvoiceUnitNetPrice</th>
-            </tr>
-            </thead>
-            <tbody>
+            <table cellpadding="0" cellspacing="0" border="0" class="display" id="details">
+                <thead>
+                <tr>
+                    <th>LineNumber</th>
+                    <th>SupplierItemCode</th>
+                    <th>ItemDescription</th>
+                    <th>InvoiceQuantity</th>
+                    <th>InvoiceUnitNetPrice</th>
+                </tr>
+                </thead>
+                <tbody>
 
-            </tbody>
-            <tfoot>
-            <tr>
-                <th>LineNumber</th>
-                <th>SupplierItemCode</th>
-                <th>ItemDescription</th>
-                <th>InvoiceQuantity</th>
-                <th>InvoiceUnitNetPrice</th>
-            </tr>
-            </tfoot>
-        </table>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>LineNumber</th>
+                    <th>SupplierItemCode</th>
+                    <th>ItemDescription</th>
+                    <th>InvoiceQuantity</th>
+                    <th>InvoiceUnitNetPrice</th>
+                </tr>
+                </tfoot>
+            </table>
         </div>
     </div>
     <div class="spacer"></div>
