@@ -29,7 +29,6 @@
                 minWidth:1000,
                 persist:true
             });
-
         }
         $(document).ready(function () {
             var connectPost = function (sSource, aoData, fnCallback) {
